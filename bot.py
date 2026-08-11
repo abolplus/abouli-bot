@@ -1,4 +1,5 @@
 import asyncio, os, random, sqlite3, time
+from aiohttp import web
 from decimal import Decimal
 from contextlib import closing
 from aiogram import Bot, Dispatcher, F
@@ -182,10 +183,34 @@ async def interest():
             done=key
         await asyncio.sleep(20)
 
+async def health(request):
+    return web.Response(text="OK")
+
+async def run_web_server():
+    port = int(os.getenv("PORT", "10000"))
+    app = web.Application()
+    app.router.add_get("/", health)
+    app.router.add_get("/health", health)
+
+    runner = web.AppRunner(app)
+    await runner.setup()
+    site = web.TCPSite(runner, "0.0.0.0", port)
+    await site.start()
+    print(f"Render health server listening on 0.0.0.0:{port}")
+
 async def main():
-    if not TOKEN: raise RuntimeError("BOT_TOKEN is required")
-    init(); asyncio.create_task(interest())
-    bot=Bot(TOKEN,default=DefaultBotProperties(parse_mode="HTML"))
+    if not TOKEN:
+        raise RuntimeError("BOT_TOKEN is required")
+
+    init()
+    asyncio.create_task(interest())
+
+    bot = Bot(TOKEN, default=DefaultBotProperties(parse_mode="HTML"))
+
+    # Keep an HTTP port open so Render Web Service can monitor the process.
+    await run_web_server()
+
     await dp.start_polling(bot)
 
-if __name__=="__main__": asyncio.run(main())
+if __name__=="__main__":
+    asyncio.run(main())
