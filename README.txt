@@ -1,19 +1,29 @@
-ABOULI BOT - RENDER
+# ABOULI BOT - Render
 
-Render:
+## Files
+- bot.py
+- requirements.txt
+- README.txt
+
+## Render
 Build Command:
-pip install -r requirements.txt
+`pip install -r requirements.txt`
 
 Start Command:
-python bot.py
+`python bot.py`
 
 Environment Variable:
-BOT_TOKEN = token from BotFather
+`BOT_TOKEN` = token from BotFather
 
-The bot is Telegram polling based and also opens an HTTP health endpoint
-on 0.0.0.0:$PORT so it can run as a Render Web Service.
+## Features
+- دستور `ابول` با پاسخ ریپلای و پاداش وابسته به سطح
+- پروف ابولی با دکمه‌های شیشه‌ای
+- ارتقای ابولی و قاشق با بررسی موجودی
+- غذا بدون گزینه «ارسال به یخچال»
+- بانک ابولی با واریز، برداشت و انتقال
+- اضافه/حذف پوینت برای ادمین
+- نمایش اعداد بدون اعشار و صفرهای اضافه
 
-IMPORTANT:
-Do not put BOT_TOKEN inside bot.py or upload it to GitHub.
-SQLite is fine for testing, but for a serious public bot with balances,
-use persistent storage/PostgreSQL.
+## Important
+BOT_TOKEN را داخل bot.py یا GitHub قرار نده.
+SQLite برای تست مناسب است؛ برای یک ربات عمومی با موجودی واقعی، PostgreSQL یا storage پایدارتر توصیه می‌شود.
